@@ -11,16 +11,17 @@ char* text;
 char* ntext;
 char* revntext;
 char key[10];
+
 void getText()
 {
 	int i = 0;
-	
+
 	data = fopen("data.cpp", "a+");
 	fseek(data, 0, SEEK_END);
 	int size = ftell(data);
 	text = (char*)malloc(size * sizeof(char));
 	text[size] = { };
-	
+
 	fseek(data, 0, SEEK_SET);
 	i = 0;
 	while (i < size) {
@@ -41,7 +42,7 @@ void getKey()
 	fclose(dataKey);
 }
 
-void Coder(int loop)
+void Encryption(int loop)
 {
 	int i, j;
 	int start = 0;
@@ -61,7 +62,7 @@ void Coder(int loop)
 	fclose(cdata);
 }
 
-void Decoder(int loop)
+void Decryption(int loop)
 {
 	int i, j;
 	int n = 0;
@@ -107,11 +108,11 @@ void ErrorTest()
 }
 int main()
 {
-	
+
 	int loop;
-	// Считывание текста
+	// Read text
 	getText();
-	// Считывание ключа
+	// Read key
 	getKey();
 
 	int length_text = strlen(text);
@@ -125,7 +126,7 @@ int main()
 		length_text++;
 	}
 	text[length_text] = '\0';
-	
+
 	ntext = (char*)malloc(length_text * sizeof(char));
 	revntext = (char*)malloc(length_text * sizeof(char));
 
@@ -137,11 +138,11 @@ int main()
 	fprintf(data, "%s", text);
 	fclose(data);
 
-	//Шифровка
-	Coder( loop);
+	//Encryption
+	Encryption(loop);
 
-	//Расшифровка
-	Decoder(loop);
+	//Decryption
+	Decryption(loop);
 
 	printf("\n");
 	printf("Final text: \n");
@@ -149,7 +150,7 @@ int main()
 
 	//Сравнение
 	ErrorTest();
-	
+
 	getch();
 
 }
